@@ -1,0 +1,35 @@
+.pokemon-box {
+  width: 318px;
+  height: 496px;
+  background-image: url('/BOX-EMERALD.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
+  margin: 0 auto;
+  /* Mobile-specific fixes */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.box-content {
+  position: absolute;
+  top: 20px; /* Account for the 70px buffer from BOX-EMERALD asset */
+  left: 4px;   /* Center within 318px width */
+  right: 4px;
+  bottom: 15px; /* Leave some bottom margin */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pokemon-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 68px); /* 4 columns, each 68px wide */
+  grid-template-rows: repeat(6, 56px);    /* 6 rows, each 56px tall */
+  gap: 2px; /* Tighter gap between sprites */
+  justify-content: center;
+  align-content: center;
+}
