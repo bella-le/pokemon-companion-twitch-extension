@@ -5,13 +5,14 @@ import './PokemonSprite.css';
 interface PokemonSpriteProps {
   pokemon?: Pokemon;
   slotIndex: number;
+  onPokemonClick?: (pokemon: Pokemon) => void;
 }
 
 const formatSpeciesName = (species: string): string => {
   return species.toLowerCase().replace(/[^a-z0-9]/g, '-');
 };
 
-const PokemonSprite: React.FC<PokemonSpriteProps> = ({ pokemon, slotIndex }) => {
+const PokemonSprite: React.FC<PokemonSpriteProps> = ({ pokemon, slotIndex, onPokemonClick }) => {
   if (!pokemon) {
     return (
       <div className="pokemon-sprite empty-slot">
@@ -22,8 +23,14 @@ const PokemonSprite: React.FC<PokemonSpriteProps> = ({ pokemon, slotIndex }) => 
 
   const spriteUrl = `./sprites/${formatSpeciesName(pokemon.species)}.png`;
 
+  const handleClick = () => {
+    if (onPokemonClick) {
+      onPokemonClick(pokemon);
+    }
+  };
+
   return (
-    <div className="pokemon-sprite occupied-slot">
+    <div className="pokemon-sprite occupied-slot" onClick={handleClick}>
       <img 
         src={spriteUrl} 
         alt={pokemon.nickname || pokemon.species}

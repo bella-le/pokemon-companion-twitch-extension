@@ -1,13 +1,14 @@
 import React from 'react';
-import type { PokemonBox as PokemonBoxType } from '../types/Pokemon';
+import type { PokemonBox as PokemonBoxType, Pokemon } from '../types/Pokemon';
 import PokemonSprite from './PokemonSprite';
 import './PokemonBox.css';
 
 interface PokemonBoxProps {
   pokemonBox: PokemonBoxType;
+  onPokemonClick?: (pokemon: Pokemon) => void;
 }
 
-const PokemonBox: React.FC<PokemonBoxProps> = ({ pokemonBox }) => {
+const PokemonBox: React.FC<PokemonBoxProps> = ({ pokemonBox, onPokemonClick }) => {
   return (
     <div className="pokemon-box">
       <div className="box-content">
@@ -17,6 +18,7 @@ const PokemonBox: React.FC<PokemonBoxProps> = ({ pokemonBox }) => {
               key={index}
               pokemon={pokemonBox.pokemon[index]}
               slotIndex={index}
+              onPokemonClick={onPokemonClick}
             />
           ))}
         </div>
