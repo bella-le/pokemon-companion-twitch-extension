@@ -11,6 +11,46 @@ const formatSpeciesName = (species: string): string => {
   return species.toLowerCase().replace(/[^a-z0-9]/g, '-');
 };
 
+const getNatureModifiers = (nature: string): { positive: string | null, negative: string | null } => {
+  const natureMap: { [key: string]: { positive: string | null, negative: string | null } } = {
+    adamant: { positive: 'atk', negative: 'spa' },
+    bashful: { positive: null, negative: null },
+    bold: { positive: 'def', negative: 'atk' },
+    brave: { positive: 'atk', negative: 'spe' },
+    calm: { positive: 'spd', negative: 'atk' },
+    careful: { positive: 'spd', negative: 'spa' },
+    docile: { positive: null, negative: null },
+    gentle: { positive: 'spd', negative: 'def' },
+    hardy: { positive: null, negative: null },
+    hasty: { positive: 'spe', negative: 'def' },
+    impish: { positive: 'def', negative: 'spa' },
+    jolly: { positive: 'spe', negative: 'spa' },
+    lax: { positive: 'def', negative: 'spd' },
+    lonely: { positive: 'atk', negative: 'def' },
+    mild: { positive: 'spa', negative: 'def' },
+    modest: { positive: 'spa', negative: 'atk' },
+    naive: { positive: 'spe', negative: 'spd' },
+    naughty: { positive: 'atk', negative: 'def' },
+    quiet: { positive: 'spa', negative: 'spe' },
+    quirky: { positive: null, negative: null },
+    rash: { positive: 'spa', negative: 'spd' },
+    relaxed: { positive: 'def', negative: 'spe' },
+    sassy: { positive: 'spd', negative: 'spe' },
+    serious: { positive: null, negative: null },
+    timid: { positive: 'spe', negative: 'atk' }
+  };
+  
+  return natureMap[nature.toLowerCase()] || { positive: null, negative: null };
+};
+
+const getStatModifierClass = (statName: string, nature: string): string => {
+  const { positive, negative } = getNatureModifiers(nature);
+  
+  if (statName === positive) return 'stat-positive';
+  if (statName === negative) return 'stat-negative';
+  return 'stat-neutral';
+};
+
 const PokemonSummary: React.FC<PokemonSummaryProps> = ({ pokemon, onBack }) => {
   const spriteUrl = `./sprites/${formatSpeciesName(pokemon.species)}.png`;
 
@@ -33,8 +73,9 @@ const PokemonSummary: React.FC<PokemonSummaryProps> = ({ pokemon, onBack }) => {
             {pokemon.is_shiny && <div className="shiny-indicator-large">✨</div>}
           </div>
           <div className="pokemon-basic-info">
-            <h2 className="pokemon-nickname">{pokemon.nickname}</h2>
+            <h2 className="pokemon-nickname">{pokemon.nickname} {pokemon.gender && `${pokemon.gender === 'Male' ? '♂' : pokemon.gender === 'Female' ? '♀' : ''}`}</h2>
             <p className="pokemon-species">{pokemon.species}</p>
+            {pokemon.held_item && <p className="pokemon-species">{pokemon.held_item}</p>}
             {pokemon.level && <p className="pokemon-level">Lv. {pokemon.level}</p>}
           </div>
         </div>
@@ -45,37 +86,36 @@ const PokemonSummary: React.FC<PokemonSummaryProps> = ({ pokemon, onBack }) => {
             <div className="stats-grid">
               <div className="stat-item">
                 <span className="stat-label">HP:</span>
-                <span className="stat-value">{pokemon.ivs[0]}</span>
+                <span className={`stat-value ${getStatModifierClass('hp', pokemon.nature)}`}>{pokemon.ivs[0]}</span>
               </div>
               <div className="stat-item">
                 <span className="stat-label">Atk:</span>
-                <span className="stat-value">{pokemon.ivs[1]}</span>
+                <span className={`stat-value ${getStatModifierClass('atk', pokemon.nature)}`}>{pokemon.ivs[1]}</span>
               </div>
               <div className="stat-item">
                 <span className="stat-label">Def:</span>
-                <span className="stat-value">{pokemon.ivs[2]}</span>
+                <span className={`stat-value ${getStatModifierClass('def', pokemon.nature)}`}>{pokemon.ivs[2]}</span>
               </div>
               <div className="stat-item">
                 <span className="stat-label">SpA:</span>
-                <span className="stat-value">{pokemon.ivs[3]}</span>
+                <span className={`stat-value ${getStatModifierClass('spa', pokemon.nature)}`}>{pokemon.ivs[3]}</span>
               </div>
               <div className="stat-item">
                 <span className="stat-label">SpD:</span>
-                <span className="stat-value">{pokemon.ivs[4]}</span>
+                <span className={`stat-value ${getStatModifierClass('spd', pokemon.nature)}`}>{pokemon.ivs[4]}</span>
               </div>
               <div className="stat-item">
                 <span className="stat-label">Spe:</span>
-                <span className="stat-value">{pokemon.ivs[5]}</span>
+                <span className={`stat-value ${getStatModifierClass('spe', pokemon.nature)}`}>{pokemon.ivs[5]}</span>
               </div>
             </div>
           </div>
           
           <div className="info-box">
             <h3>Details</h3>
-            <p><strong>Nature:</strong> {pokemon.nature}</p>
-            <p><strong>Ability:</strong> {pokemon.ability}</p>
-            <p><strong>Gender:</strong> {pokemon.gender}</p>
-            {pokemon.held_item && <p><strong>Held Item:</strong> {pokemon.held_item}</p>}
+            {pokemon.nature && <p><strong>Nature:</strong> {pokemon.nature}</p>}
+            {pokemon.ability && <p><strong>Ability:</strong> {pokemon.ability}</p>}
+            {pokemon.gender && <p><strong>Gender:</strong> {pokemon.gender}</p>}
           </div>
           
           <div className="info-box">

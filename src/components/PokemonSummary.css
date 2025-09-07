@@ -163,6 +163,18 @@
   font-weight: bold;
 }
 
+.stat-positive {
+  color: #4ade80 !important; /* Green for boosted stats */
+}
+
+.stat-negative {
+  color: #f87171 !important; /* Red for reduced stats */
+}
+
+.stat-neutral {
+  color: #fff !important; /* White for neutral stats */
+}
+
 .moves-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
