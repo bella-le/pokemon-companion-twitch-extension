@@ -13,6 +13,7 @@
   overflow: hidden;
   font-family: 'Pokemon', monospace;
   color: white;
+  flex-shrink: 0;
 }
 
 .summary-header {

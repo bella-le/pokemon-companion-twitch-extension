@@ -6,7 +6,7 @@
   background-repeat: no-repeat;
   background-position: center;
   position: relative;
-  margin: 0 auto;
+  flex-shrink: 0;
   /* Mobile-specific fixes */
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
