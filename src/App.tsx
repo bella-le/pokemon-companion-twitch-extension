@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import './App.css'
 import PokemonBox from './components/PokemonBox'
 import PokemonSummary from './components/PokemonSummary'
