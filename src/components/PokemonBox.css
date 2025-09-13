@@ -17,8 +17,12 @@
 .box-header {
   position: absolute;
   top: 8px;
+  left: 8px;
   right: 8px;
   z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .copy-box-button {
@@ -40,9 +44,41 @@
   transform: scale(1.05);
 }
 
+.pagination-button {
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid #333;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-family: 'Pokemon', monospace;
+  font-size: 14px;
+  cursor: pointer;
+  color: #333;
+  font-weight: bold;
+  transition: all 0.2s ease;
+  min-width: 40px;
+}
+
+.pagination-button:hover:not(:disabled) {
+  background: white;
+  transform: scale(1.05);
+}
+
+.pagination-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-button.left {
+  margin-right: auto;
+}
+
+.pagination-button.right {
+  margin-left: 8px;
+}
+
 .box-content {
   position: absolute;
-  top: 20px; /* Account for the 70px buffer from BOX-EMERALD asset */
+  top: 40px; /* Account for the 70px buffer from BOX-EMERALD asset */
   left: 4px;   /* Center within 318px width */
   right: 4px;
   bottom: 15px; /* Leave some bottom margin */

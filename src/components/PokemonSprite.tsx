@@ -16,7 +16,7 @@ const PokemonSprite: React.FC<PokemonSpriteProps> = ({ pokemon, slotIndex, onPok
   if (!pokemon) {
     return (
       <div className="pokemon-sprite empty-slot">
-        <span className="slot-number">{slotIndex + 1}</span>
+        {/* <span className="slot-number">{slotIndex + 1}</span> */}
       </div>
     );
   }
@@ -36,7 +36,7 @@ const PokemonSprite: React.FC<PokemonSpriteProps> = ({ pokemon, slotIndex, onPok
         alt={pokemon.nickname || pokemon.species}
         className="sprite-image"
       />
-      {pokemon.is_shiny && <div className="shiny-indicator">✨</div>}
+      {/* {pokemon.is_shiny && <div className="shiny-indicator">✨</div>} */}
     </div>
   );
 };
