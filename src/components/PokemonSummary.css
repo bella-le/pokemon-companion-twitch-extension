@@ -21,9 +21,11 @@
   top: 8px;
   right: 8px;
   z-index: 10;
+  display: flex;
+  gap: 8px;
 }
 
-.back-button {
+.back-button, .copy-button {
   background: rgba(255, 255, 255, 0.9);
   border: 2px solid #333;
   border-radius: 8px;
@@ -36,9 +38,13 @@
   transition: all 0.2s ease;
 }
 
-.back-button:hover {
+.back-button:hover, .copy-button:hover {
   background: white;
   transform: scale(1.05);
+}
+
+.copy-button {
+  min-width: 40px;
 }
 
 .summary-content {

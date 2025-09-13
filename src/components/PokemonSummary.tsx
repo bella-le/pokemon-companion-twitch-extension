@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import type { Pokemon } from '../types/Pokemon';
+import { formatPokemonToPokepaste, copyToClipboard } from '../utils/pokepaste';
 import './PokemonSummary.css';
 
 interface PokemonSummaryProps {
@@ -52,11 +53,28 @@ const getStatModifierClass = (statName: string, nature: string): string => {
 };
 
 const PokemonSummary: React.FC<PokemonSummaryProps> = ({ pokemon, onBack }) => {
+  const [copyStatus, setCopyStatus] = useState<string>('');
   const spriteUrl = `./sprites/${formatSpeciesName(pokemon.species)}.png`;
+
+  const handleCopyPokepaste = async () => {
+    const pokepaste = formatPokemonToPokepaste(pokemon);
+    const success = await copyToClipboard(pokepaste);
+    
+    if (success) {
+      setCopyStatus('Copied!');
+      setTimeout(() => setCopyStatus(''), 2000);
+    } else {
+      setCopyStatus('Failed to copy');
+      setTimeout(() => setCopyStatus(''), 2000);
+    }
+  };
 
   return (
     <div className="pokemon-summary">
       <div className="summary-header">
+        <button className="copy-button" onClick={handleCopyPokepaste} title="Copy Pokepaste">
+          {copyStatus || '📋'}
+        </button>
         <button className="back-button" onClick={onBack}>
           ← Back
         </button>

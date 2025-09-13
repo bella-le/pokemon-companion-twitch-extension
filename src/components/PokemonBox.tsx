@@ -1,6 +1,7 @@
-import React from 'react';
-import type { PokemonBox as PokemonBoxType, Pokemon } from '../types/Pokemon';
+import React, { useState } from 'react';
+import type { Pokemon, PokemonBox as PokemonBoxType } from '../types/Pokemon';
 import PokemonSprite from './PokemonSprite';
+import { formatBoxToPokepaste, copyToClipboard } from '../utils/pokepaste';
 import './PokemonBox.css';
 
 interface PokemonBoxProps {
@@ -9,8 +10,28 @@ interface PokemonBoxProps {
 }
 
 const PokemonBox: React.FC<PokemonBoxProps> = ({ pokemonBox, onPokemonClick }) => {
+  const [copyStatus, setCopyStatus] = useState<string>('');
+
+  const handleCopyBoxPokepaste = async () => {
+    const pokepaste = formatBoxToPokepaste(pokemonBox.pokemon);
+    const success = await copyToClipboard(pokepaste);
+    
+    if (success) {
+      setCopyStatus('Copied!');
+      setTimeout(() => setCopyStatus(''), 2000);
+    } else {
+      setCopyStatus('Failed to copy');
+      setTimeout(() => setCopyStatus(''), 2000);
+    }
+  };
+
   return (
     <div className="pokemon-box">
+      <div className="box-header">
+        <button className="copy-box-button" onClick={handleCopyBoxPokepaste} title="Copy Box Pokepaste">
+          {copyStatus || '📋'}
+        </button>
+      </div>
       <div className="box-content">
         <div className="pokemon-grid">
           {Array.from({ length: 24 }, (_, index) => (
