@@ -4,7 +4,6 @@ import './PokemonSprite.css';
 
 interface PokemonSpriteProps {
   pokemon?: Pokemon;
-  slotIndex: number;
   onPokemonClick?: (pokemon: Pokemon) => void;
 }
 
@@ -12,7 +11,7 @@ const formatSpeciesName = (species: string): string => {
   return species.toLowerCase().replace(/[^a-z0-9]/g, '-');
 };
 
-const PokemonSprite: React.FC<PokemonSpriteProps> = ({ pokemon, slotIndex, onPokemonClick }) => {
+const PokemonSprite: React.FC<PokemonSpriteProps> = ({ pokemon, onPokemonClick }) => {
   if (!pokemon) {
     return (
       <div className="pokemon-sprite empty-slot">

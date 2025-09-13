@@ -76,7 +76,6 @@ const PokemonBox: React.FC<PokemonBoxProps> = ({ pokemonBox, onPokemonClick }) =
             <PokemonSprite
               key={`${currentPage}-${index}`}
               pokemon={currentPagePokemon[index]}
-              slotIndex={startIndex + index}
               onPokemonClick={onPokemonClick}
             />
           ))}
